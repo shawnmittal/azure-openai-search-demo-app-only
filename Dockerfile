@@ -19,6 +19,7 @@ RUN pip install gunicorn
 COPY app/backend .
 COPY --from=frontend /app/backend/static ./static
 
+ENV PORT 80
 EXPOSE 80
 
 ENTRYPOINT ["python"]
