@@ -45,9 +45,9 @@ openai.api_key = AZURE_OPENAI_SERVICE_KEY
 openai.api_version = "2023-05-15"
 
 # Comment these two lines out if using keys, set your API key in the OPENAI_API_KEY environment variable instead
-openai.api_type = "azure_ad"
-#openai_token = azure_credential.get_token("https://cognitiveservices.azure.com/.default")
-#openai.api_key = openai_token.token
+# openai.api_type = "azure_ad"
+# openai_token = azure_credential.get_token("https://cognitiveservices.azure.com/.default")
+# openai.api_key = openai_token.token
 
 # Set up clients for Cognitive Search and Storage
 search_client = SearchClient(
@@ -62,18 +62,13 @@ blob_container = blob_client.get_container_client(AZURE_STORAGE_CONTAINER)
 # Various approaches to integrate GPT and external knowledge, most applications will use a single one of these patterns
 # or some derivative, here we include several for exploration purposes
 ask_approaches = {
-    "rtr": RetrieveThenReadApproach(search_client, AZURE_OPENAI_CHATGPT_DEPLOYMENT, AZURE_OPENAI_CHATGPT_MODEL, AZURE_OPENAI_EMB_DEPLOYMENT, KB_FIELDS_SOURCEPAGE, KB_FIELDS_CONTENT),
-    "rrr": ReadRetrieveReadApproach(search_client, AZURE_OPENAI_GPT_DEPLOYMENT, AZURE_OPENAI_EMB_DEPLOYMENT, KB_FIELDS_SOURCEPAGE, KB_FIELDS_CONTENT),
-    "rda": ReadDecomposeAsk(search_client, AZURE_OPENAI_GPT_DEPLOYMENT, AZURE_OPENAI_EMB_DEPLOYMENT, KB_FIELDS_SOURCEPAGE, KB_FIELDS_CONTENT)
+    "rtr": RetrieveThenReadApproach(search_client, AZURE_OPENAI_CHATGPT_DEPLOYMENT, AZURE_OPENAI_CHATGPT_MODEL, KB_FIELDS_SOURCEPAGE, KB_FIELDS_CONTENT),
+    "rrr": ReadRetrieveReadApproach(search_client, AZURE_OPENAI_GPT_DEPLOYMENT, KB_FIELDS_SOURCEPAGE, KB_FIELDS_CONTENT),
+    "rda": ReadDecomposeAsk(search_client, AZURE_OPENAI_GPT_DEPLOYMENT, KB_FIELDS_SOURCEPAGE, KB_FIELDS_CONTENT)
 }
 
 chat_approaches = {
-    "rrr": ChatReadRetrieveReadApproach(search_client, 
-                                        AZURE_OPENAI_CHATGPT_DEPLOYMENT,
-                                        AZURE_OPENAI_CHATGPT_MODEL, 
-                                        AZURE_OPENAI_EMB_DEPLOYMENT,
-                                        KB_FIELDS_SOURCEPAGE, 
-                                        KB_FIELDS_CONTENT)
+    "rrr": ChatReadRetrieveReadApproach(search_client, AZURE_OPENAI_CHATGPT_DEPLOYMENT, AZURE_OPENAI_CHATGPT_MODEL, KB_FIELDS_SOURCEPAGE, KB_FIELDS_CONTENT)
 }
 
 app = Flask(__name__)
@@ -101,7 +96,7 @@ def content_file(path):
     
 @app.route("/ask", methods=["POST"])
 def ask():
-    #ensure_openai_token()
+    # ensure_openai_token()
     if not request.json:
         return jsonify({"error": "request must be json"}), 400
     approach = request.json["approach"]
@@ -117,7 +112,7 @@ def ask():
     
 @app.route("/chat", methods=["POST"])
 def chat():
-    #ensure_openai_token()
+    # ensure_openai_token()
     if not request.json:
         return jsonify({"error": "request must be json"}), 400
     approach = request.json["approach"]
