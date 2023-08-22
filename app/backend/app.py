@@ -40,7 +40,7 @@ KB_FIELDS_SOURCEPAGE = os.environ.get("KB_FIELDS_SOURCEPAGE") or "sourcepage"
 
 # Used by the OpenAI SDK
 openai.api_type = "azure"
-openai.api_base = f"https://{AZURE_OPENAI_SERVICE}.openai.azure.com"
+openai.api_base = AZURE_OPENAI_SERVICE
 openai.api_key = AZURE_OPENAI_SERVICE_KEY
 openai.api_version = "2023-05-15"
 
@@ -51,11 +51,11 @@ openai.api_version = "2023-05-15"
 
 # Set up clients for Cognitive Search and Storage
 search_client = SearchClient(
-    endpoint=f"https://{AZURE_SEARCH_SERVICE}.search.windows.net",
+    endpoint=AZURE_SEARCH_SERVICE,
     index_name=AZURE_SEARCH_INDEX,
     credential=AzureKeyCredential(AZURE_SEARCH_SERVICE_KEY))
 blob_client = BlobServiceClient(
-    account_url=f"https://{AZURE_STORAGE_ACCOUNT}.blob.core.windows.net", 
+    account_url=AZURE_STORAGE_ACCOUNT, 
     credential=AZURE_STORAGE_ACCOUNT_KEY)
 blob_container = blob_client.get_container_client(AZURE_STORAGE_CONTAINER)
 
