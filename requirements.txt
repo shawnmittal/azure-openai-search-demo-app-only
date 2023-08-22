@@ -1,0 +1,10 @@
+pypdf==3.5.0
+azure-identity==1.13.0b4
+azure-search-documents==11.4.0b3
+azure-ai-formrecognizer==3.2.1
+azure-storage-blob==12.14.1
+pycryptodome==3.18.0
+Flask==2.2.5
+langchain==0.0.187
+openai==0.27.8
+tiktoken==0.4.0
