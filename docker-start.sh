@@ -1,1 +1,0 @@
-docker run -p 80:80 --env-file=.env docker.io/library/flaskapptest

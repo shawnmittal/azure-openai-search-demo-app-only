@@ -1,0 +1,1 @@
+docker run -p 80:80 --env-file=.env mycontainerregistry.io/tagname:version

@@ -1,0 +1,1 @@
+docker build -t mycontainerregistry.io/tagname:version .
